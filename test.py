@@ -231,11 +231,15 @@ def test(data,
     # Print results
     pf = '%20s' + '%12i' * 2 + '%12.3g' * 4  # print format
     print(pf % ('all', seen, nt.sum(), mp, mr, map50, map))
+    with open(save_dir / ('results.txt'), 'a') as f:
+      f.write(pf % ('all', seen, nt.sum(), mp, mr, map50, map)+ '\n')
 
     # Print results per class
     if (verbose or (nc < 50 and not training)) and nc > 1 and len(stats):
         for i, c in enumerate(ap_class):
             print(pf % (names[c], seen, nt[c], p[i], r[i], ap50[i], ap[i]))
+            with open(save_dir / ('results.txt'), 'a') as f:
+              f.write(pf % (names[c], seen, nt[c], p[i], r[i], ap50[i], ap[i])+ '\n')
 
     # Print speeds
     t = tuple(x / seen * 1E3 for x in (t0, t1, t0 + t1)) + (imgsz, imgsz, batch_size)  # tuple
